@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="01_index.css">
+    <link rel="icon" href="th.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Document</title>
+</head>
+<body>
+   <nav class="navbar">
+        <h1><i class="fa-solid fa-qrcode"></i>&nbsp;QR Code Generator</h1>
+   </nav>
+   <div class="container">
+       <div class="main">
+            <h2>Generate QR Codes Instantly</h2>
+            <p>Create QR codes for URLs, text, and more in just seconds - completely free!</p>
+       </div>
+
+       <div class="input-back">
+            <div class="input-container">
+                <input type="text" placeholder="Enter Text or URL" id="txt">
+                <div class="options-container">
+                    <div class="option">
+                        <label for="size">Size:</label>
+                        <select id="size">
+                            <option value="100x100">Small</option>
+                            <option value="200x200" selected>Medium</option>
+                            <option value="300x300">Large</option>
+                        </select>
+                    </div>
+                    <div class="option">
+                        <label for="fgColor">Foreground Color:</label>
+                        <input type="color" id="fgColor" value="#000000">
+                    </div>
+                    <div class="option">
+                        <label for="bgColor">Background Color:</label>
+                        <input type="color" id="bgColor" value="#FFFFFF">
+                    </div>
+                    <div class="option">
+                        <label for="iconFile">QR Icon:</label>
+                        <input type="file" id="iconFile" accept="image/*" onchange="handleIconUpload(event)">
+                    </div>
+                    <div class="option">
+                        <label for="iconSize">Icon Size:</label>
+                        <select id="iconSize">
+                            <option value="0.2">Small</option>
+                            <option value="0.3" selected>Medium</option>
+                            <option value="0.4">Large</option>
+                        </select>
+                    </div>
+                </div>
+                <button onclick="qrcode()" class="generate-btn">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Generate QR Code
+                </button>
+            </div>
+
+            <div id="imgBox">
+                <img src="" id="qrimg" alt="QR Code">
+                <button onclick="downloadQR()" id="downloadBtn" class="download-btn" style="display: none;">
+                    <i class="fa-solid fa-download"></i> Download QR Code
+                </button>
+            </div>
+       </div>
+   </div>
+
+   <footer>
+        <p>&copy; 2024 QR Code Generator. All rights reserved.</p>
+        <div class="social-links">
+            <a href="https://github.com/Glitch-210" target="_blank">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/" target="_blank">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        </div>
+   </footer>
+
+   <script>
+        let imgBox = document.getElementById("imgBox");
+        let qrimg = document.getElementById("qrimg");
+        let txt = document.getElementById("txt");
+        let downloadBtn = document.getElementById("downloadBtn");
+        let iconDataUrl = null;
+
+        function handleIconUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    iconDataUrl = e.target.result;
+                    if (txt.value.length > 0) {
+                        qrcode(); // Regenerate QR code with new icon
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function qrcode(){
+            if(txt.value.length > 0) {
+                const size = document.getElementById("size").value;
+                const fgColor = document.getElementById("fgColor").value.substring(1);
+                const bgColor = document.getElementById("bgColor").value.substring(1);
+                const iconSize = document.getElementById("iconSize").value;
+                
+                let url = `https://api.qrserver.com/v1/create-qr-code/?size=${size}&data=${encodeURIComponent(txt.value)}&color=${fgColor}&bgcolor=${bgColor}`;
+                
+                if (iconDataUrl) {
+                    url += `&icon=${encodeURIComponent(iconDataUrl)}&iconsizePercent=${iconSize * 100}`;
+                }
+                
+                qrimg.src = url;
+                imgBox.classList.add("show-img");
+                downloadBtn.style.display = "block";
+            } else {
+                txt.classList.add("error");
+                setTimeout(() => txt.classList.remove("error"), 1000);
+            }
+        }
+
+        function downloadQR() {
+            fetch(qrimg.src)
+            .then(response => response.blob())
+            .then(blob => {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'qrcode.png';
+                link.click();
+            });
+        }
+   </script>
+</body>
+</html>

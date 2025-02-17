@@ -1,0 +1,230 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-family:'Poppins', sans-serif;
+}
+body{
+    /*  charcoal black*/
+    background-color: #101820;
+}
+nav{
+    background-color: rgba(254, 231, 21, 0.1);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+nav h1{
+    color: #FEE715;
+    font-size: 1.5rem;
+}
+.form1{
+    display: flex;
+    gap: 1rem;
+}
+.form1 button {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s, opacity 0.2s;
+}
+.form1 button:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+#register {
+    background-color: #FEE715;
+    color: #101820;
+}
+#login {
+    background-color: whitesmoke;
+    color: #101820;
+}
+.main {
+    text-align: center;
+    color: whitesmoke;
+    margin-bottom: 3rem;
+}
+.main h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+.main p {
+    font-size: 1.1rem;
+    opacity: 0.8;
+}
+.input-back {
+    background-color: #FEE715;
+    border-radius: 12px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+.input-container {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+#txt {
+    flex: 1;
+    padding: 1rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+#txt.error {
+    animation: shake 0.5s;
+    border: 2px solid #ff3333;
+}
+.generate-btn, .download-btn {
+    padding: 1rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    background-color: #101820;
+    color: #FEE715;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 0.2s;
+}
+.generate-btn:hover, .download-btn:hover {
+    transform: translateY(-2px);
+}
+#imgBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+#imgBox.show-img {
+    max-height: 500px;
+}
+#qrimg {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+.options-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: rgba(16, 24, 32, 0.05);
+    border-radius: 8px;
+}
+.option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.option label {
+    font-weight: 500;
+    color: #101820;
+}
+.option select {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+}
+.option input[type="color"] {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 0;
+}
+.option input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+.option input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 4px;
+}
+.option input[type="file"] {
+    display: none;
+}
+.option label[for="iconFile"] {
+    padding: 0.5rem 1rem;
+    background-color: #101820;
+    color: #FEE715;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.option label[for="iconFile"]:hover {
+    transform: translateY(-2px);
+}
+.option label[for="iconFile"]::after {
+    content: "Choose File";
+    margin-left: 0.5rem;
+}
+footer {
+    margin-top: 3rem;
+    padding: 2rem;
+    background-color: rgba(254, 231, 21, 0.1);
+    color: #FEE715;
+    text-align: center;
+}
+.social-links {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+.social-links a {
+    color: #FEE715;
+    font-size: 1.5rem;
+    transition: transform 0.2s;
+}
+.social-links a:hover {
+    transform: translateY(-2px);
+}
+@media (max-width: 768px) {
+    .input-container {
+        flex-direction: column;
+    }
+    
+    nav {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .form1 {
+        width: 100%;
+        justify-content: center;
+    }
+    .options-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .option {
+        justify-content: space-between;
+    }
+}
