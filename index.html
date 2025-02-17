@@ -41,18 +41,6 @@
                         <label for="bgColor">Background Color:</label>
                         <input type="color" id="bgColor" value="#FFFFFF">
                     </div>
-                    <div class="option">
-                        <label for="iconFile">QR Icon:</label>
-                        <input type="file" id="iconFile" accept="image/*" onchange="handleIconUpload(event)">
-                    </div>
-                    <div class="option">
-                        <label for="iconSize">Icon Size:</label>
-                        <select id="iconSize">
-                            <option value="0.2">Small</option>
-                            <option value="0.3" selected>Medium</option>
-                            <option value="0.4">Large</option>
-                        </select>
-                    </div>
                 </div>
                 <button onclick="qrcode()" class="generate-btn">
                     <i class="fa-solid fa-wand-magic-sparkles"></i> Generate QR Code
@@ -74,8 +62,11 @@
             <a href="https://github.com/Glitch-210" target="_blank">
                 <i class="fab fa-github"></i>
             </a>
-            <a href="https://www.linkedin.com/in/" target="_blank">
+            <a href="https://www.linkedin.com/in/mustafa-khericha" target="_blank">
                 <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://www.instagram.com/_mustafa.21_/" target="_blank">
+                <i class="fab fa-instagram"></i>
             </a>
         </div>
    </footer>
@@ -85,34 +76,14 @@
         let qrimg = document.getElementById("qrimg");
         let txt = document.getElementById("txt");
         let downloadBtn = document.getElementById("downloadBtn");
-        let iconDataUrl = null;
-
-        function handleIconUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    iconDataUrl = e.target.result;
-                    if (txt.value.length > 0) {
-                        qrcode(); // Regenerate QR code with new icon
-                    }
-                };
-                reader.readAsDataURL(file);
-            }
-        }
 
         function qrcode(){
             if(txt.value.length > 0) {
                 const size = document.getElementById("size").value;
                 const fgColor = document.getElementById("fgColor").value.substring(1);
                 const bgColor = document.getElementById("bgColor").value.substring(1);
-                const iconSize = document.getElementById("iconSize").value;
                 
                 let url = `https://api.qrserver.com/v1/create-qr-code/?size=${size}&data=${encodeURIComponent(txt.value)}&color=${fgColor}&bgcolor=${bgColor}`;
-                
-                if (iconDataUrl) {
-                    url += `&icon=${encodeURIComponent(iconDataUrl)}&iconsizePercent=${iconSize * 100}`;
-                }
                 
                 qrimg.src = url;
                 imgBox.classList.add("show-img");
